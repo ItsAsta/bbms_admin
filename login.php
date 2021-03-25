@@ -45,6 +45,7 @@ navigationOutput('Login');
                 if (isset($_GET["success"])) {
                     if ($_GET["success"] == "yes") {
                         echo "<p class='success'>Your account has been registered!</p>";
+                        exit();
                     }
                 }
                 ?>

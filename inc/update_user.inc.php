@@ -11,7 +11,5 @@ if (isset($_POST["update_user"])) {
     require_once 'dbh.inc.php';
     require_once 'functions.inc.php';
 
-//    echo $phoneNumber;
-
     updateUser($db, $email, $firstName, $lastName, $address, $postcode, $phoneNumber);
 }

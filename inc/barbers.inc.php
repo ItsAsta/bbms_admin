@@ -20,7 +20,6 @@ if (isset($_POST["edit_barber"])) {
 if (isset($_POST["remove_barber"])) {
     $barberId = $_POST["barber_id"];
 
-//    echo $barberId;
     removeBarber($db, $barberId);
 }
 

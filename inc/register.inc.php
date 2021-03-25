@@ -15,10 +15,11 @@ if (isset($_POST["register"])) {
     require_once 'dbh.inc.php';
     require_once 'functions.inc.php';
 
-    if (emptyRegisterInput($email, $password, $confirmPassword, $firstName, $lastName, $address, $postcode, $phoneNumber) !== false) {
+    if (!emptyInput(array($email, $password, $confirmPassword, $firstName, $lastName, $address, $postcode, $phoneNumber))) {
         header("location: ../register.php?error=empty");
         exit();
     }
+
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         header("location: ../register.php?error=email");
         exit();

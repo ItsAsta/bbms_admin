@@ -5,6 +5,9 @@ include_once('inc/header.inc.php');
 include_once('inc/dbh.inc.php');
 headerOutput('Home', array("assets/styles/bootstrap.css", "assets/styles/stylesheet.css", "assets/styles/picker.css"));
 navigationOutput('Home');
+if (empty($_SESSION["email"])) {
+    header("location: login.php");
+}
 ?>
 <div class="container-wrapper">
     <div class="container">
@@ -23,7 +26,7 @@ navigationOutput('Home');
                     </thead>
                     <tbody>
                     <?php
-                    if (isset($_SESSION["barbershop_id"])) {
+                    if (!empty($_SESSION["barbershop_id"])) {
                         $iniSql = "UPDATE `booking` set `booking_status` = 1 WHERE booking_date_time_booked < CURRENT_DATE()";
                         $iniResult = mysqli_query($db, $iniSql);
 
@@ -37,7 +40,7 @@ navigationOutput('Home');
                                 echo "<td>" . $row["user_first_name"] . " " . $row["user_last_name"] . "</td>";
                                 echo "<td>" . date("d-m-Y g:i A", strtotime($row["booking_date_time_booked"])) . "</td>";
                                 echo "<td>" . $row["barber_name"] . "</td></tr>";
-                            }
+                            } exit();
                         }
                     }
                     ?>
@@ -48,14 +51,14 @@ navigationOutput('Home');
         </div>
     </div>
     <?php
-        if (isset($_SESSION["barbershop_id"])) { ?>
+        if (!empty($_SESSION["barbershop_id"])) { ?>
     <div class="container" id="overviewContainer" style="padding: 0 10px 5px 10px">
         <?php
             $todaysBookingsSql = "SELECT * FROM `booking` WHERE barbershop_id = " . $_SESSION["barbershop_id"] . " AND cast(`booking_date_time_booked` as date) = cast(NOW() as date)";
             $todaysBookingsResult = mysqli_query($db, $todaysBookingsSql);
             $todaysBookingsResultCheck = mysqli_num_rows($todaysBookingsResult);
 
-            $activeBookingsSql = "SELECT * FROM `booking` WHERE barbershop_id = " . $_SESSION["barbershop_id"] . " AND booking_date_time_booked >= CURRENT_DATE()";
+            $activeBookingsSql = "SELECT * FROM `booking` WHERE barbershop_id = " . $_SESSION["barbershop_id"] . " AND booking_date_time_booked >= CURRENT_DATE() AND booking_status = 0";
             $activeBookingsSqlResult = mysqli_query($db, $activeBookingsSql);
             $activeBookingsSqlResultCheck = mysqli_num_rows($activeBookingsSqlResult);
 
@@ -74,7 +77,7 @@ navigationOutput('Home');
         <div class="col-sm overview-col-sm" style="background-color: #00446e">
             <div class="col-sm-title">
                 <h5 class="col-sm-title"><?php echo $todaysBookingsResultCheck?></h5>
-                <p>Bookings Today</p>
+                <p>Total Bookings Today</p>
             </div>
         </div>
 
@@ -88,7 +91,7 @@ navigationOutput('Home');
         <div class="col-sm overview-col-sm" style="background-color: #00446e">
             <div class="col-sm-title">
                 <h5 class="col-sm-title"><?php echo $bookingsResultCheck ?></h5>
-                <p>Bookings</p>
+                <p>Overall Bookings</p>
             </div>
         </div>
 
@@ -98,6 +101,6 @@ navigationOutput('Home');
                 <p>Customers</p>
             </div>
         </div>
-        <?php } ?>
+        <?php } exit();?>
     </div>
 </div>

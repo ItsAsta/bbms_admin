@@ -1,26 +1,12 @@
 <?php
 session_start();
 
-// Registration
-function emptyRegisterInput($email, $password, $confirmPassword, $firstName, $lastName, $address, $postcode, $phoneNumber) {
-    $result = null;
-    if (empty($email) || empty($password) || empty($confirmPassword) || empty($firstName) || empty($lastName) ||
-        empty($address) || empty($postcode) || empty($phoneNumber)) {
-        $result = true;
-    } else {
-        $result = false;
-    }
-
-
-    return $result;
-}
-
 function userExists($db, $email) {
     $sql = "SELECT * FROM staff WHERE staff_email = ?;";
     $stmt = mysqli_stmt_init($db);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../register.inc.php?register=stmtFailed");
+        header("location: ../register.inc.php?error=stmtFailed");
         exit();
     }
 
@@ -44,7 +30,7 @@ function registerStaff($db, $email, $password, $firstName, $lastName, $address, 
     $stmt = mysqli_stmt_init($db);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../register.inc.php?register=stmtFailed");
+        header("location: ../register.inc.php?error=stmtFailed");
         exit();
     }
 
@@ -91,28 +77,6 @@ function loginStaff($db, $email, $password) {
     }
 }
 
-function bookAppointment($db, $barbershopId, $barberId, $email, $bookedDate, $bookedTime, $currentDateTime, $status) {
-
-    $bookedDateTime = $bookedDate . " " . $bookedTime;
-
-    $sql = "INSERT INTO `booking` (`barbershop_id`, `barber_id`, `booking_email`, `booking_date_time_of_booking`, `booking_date_time_booked`, `booking_status`) VALUES
-           (?, ?, ?, ?, ?, ?)";
-
-    $stmt = mysqli_stmt_init($db);
-
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../book_app.inc.php?booking=stmtFailed");
-        exit();
-    }
-
-
-    mysqli_stmt_bind_param($stmt, "ssssss", $barbershopId, $barberId, $email, $currentDateTime, $bookedDateTime, $status);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-
-    header("location: ../bookings.php?success=yes");
-}
-
 function updateBarberStatus($db, $barbershop_id, $barber_id) {
     $barber_status = null;
 
@@ -120,7 +84,7 @@ function updateBarberStatus($db, $barbershop_id, $barber_id) {
     $stmt = mysqli_stmt_init($db);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../register.inc.php?register=stmtFailed");
+        header("location: ../barbers.inc.php?error=stmtFailed");
         exit();
     }
 
@@ -141,7 +105,7 @@ function updateBarberStatus($db, $barbershop_id, $barber_id) {
         $stmt = mysqli_stmt_init($db);
 
         if (!mysqli_stmt_prepare($stmt, $sql)) {
-            header("location: ../book_app.inc.php?booking=stmtFailed");
+            header("location: ../barbers.inc.php?error=stmtFailed");
             exit();
         }
 
@@ -158,7 +122,7 @@ function updateBarberDetails($db, $barbershop_id, $barber_id, $barber_name, $bar
     $stmt = mysqli_stmt_init($db);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../book_app.inc.php?booking=stmtFailed");
+        header("location: ../barbers.inc.php?error=stmtFailed");
         exit();
     }
 
@@ -168,19 +132,6 @@ function updateBarberDetails($db, $barbershop_id, $barber_id, $barber_name, $bar
     header("location: ../barbers.php");
 }
 
-// Redirects the page to the login page or view booking page depends if we are logged in.
-if (isset($_POST["loginRedirect"])) {
-    session_start();
-    if (isset($_SESSION["email"])) {
-        // Redirect to a different page to do the booking passing over the store ID as reference to the page using POST
-        header("location: ../bookings.php");
-        exit();
-    } else {
-        header("location: ../login.php");
-        exit();
-    }
-}
-
 function addBarber($db, $barber_name, $barber_experience, $barber_speciality, $barbershop_id) {
     $sql = "INSERT INTO `barber` (`barber_name`, `barber_experience`, `barber_speciality`, `barbershop_id`) VALUES
            (?, ?, ?, ?)";
@@ -188,7 +139,7 @@ function addBarber($db, $barber_name, $barber_experience, $barber_speciality, $b
     $stmt = mysqli_stmt_init($db);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../book_app.inc.php?booking=stmtFailed");
+        header("location: ../barbers.inc.php?error=stmtFailed");
         exit();
     }
 
@@ -206,7 +157,7 @@ function removeBarber($db, $barber_id) {
     $stmt = mysqli_stmt_init($db);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../book_app.inc.php?booking=stmtFailed");
+        header("location: ../barbers.inc.php?error=stmtFailed");
         exit();
     }
 
@@ -224,7 +175,7 @@ function updateUser($db, $email, $firstName, $lastName, $address, $postcode, $ph
     $stmt = mysqli_stmt_init($db);
 
     if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header("location: ../book_app.inc.php?booking=stmtFailed");
+        header("location: ../users.inc.php?error=stmtFailed");
         exit();
     }
 
@@ -232,4 +183,20 @@ function updateUser($db, $email, $firstName, $lastName, $address, $postcode, $ph
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
     header("location: ../users.php");
+}
+
+function updateBarbershop($db, $barbershopId, $name, $branch, $address, $postcode, $opening, $closing, $phoneNumber) {
+    $sql = "UPDATE `barbershop` SET `barbershop_name` = ?, `barbershop_branch` = ?, `barbershop_address` = ?, `barbershop_postcode` = ?, `barbershop_opening_time` = ?, `barbershop_closing_time` = ?, `barbershop_phone_number` = ? WHERE `barbershop_id` = ?";
+
+    $stmt = mysqli_stmt_init($db);
+
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../barbershop.inc.php?error=stmtFailed");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "ssssssss", $name, $branch, $address, $postcode, $opening, $closing, $phoneNumber, $barbershopId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ../barbershop.php?success=yes");
 }

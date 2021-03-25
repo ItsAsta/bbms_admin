@@ -53,13 +53,17 @@ function navigationOutput($currentPage)
 function loopNavigation($currentPage)
 {
     // An array variable with our page names, which we'll match using the index with our second array.
-    $pageTitle = array("Home", "Bookings", "Barbers", "Users", "Login");
+    $pageTitle = array("Home", "Barbershop", "Bookings", "Barbers", "Users", "Login");
 
     // An array variable with our file names which we'll redirect to using the HREF attribute.
-    $fileNames = array("index.php", "bookings.php", "barbers.php", "users.php", "login.php");
+    $fileNames = array("index.php", "barbershop.php", "bookings.php", "barbers.php", "users.php", "login.php");
 
     if (empty($_SESSION["email"])) {
 
+        array_splice($pageTitle, 1, 1);
+        array_splice($fileNames, 1, 1);
+        array_splice($pageTitle, 1, 1);
+        array_splice($fileNames, 1, 1);
         array_splice($pageTitle, 1, 1);
         array_splice($fileNames, 1, 1);
         array_splice($pageTitle, 1, 1);
@@ -79,11 +83,11 @@ function loopNavigation($currentPage)
         }
 
         // We checking if the user is logged in by checking if there is any session set.
-        if (isset($_SESSION["email"])) {
+        if (!empty($_SESSION["email"])) {
             // If the if statement returns true, we'll get the 4th index in our array and change the string to logout.
             // Since the user is logged in, we want to display logout instead of login/register.
-            $pageTitle[4] = "Logout";
-            $fileNames[4] = "inc/logout.inc.php";
+            $pageTitle[5] = "Logout";
+            $fileNames[5] = "inc/logout.inc.php";
         }
 
         // We then echo out our html code.

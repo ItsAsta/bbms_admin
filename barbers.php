@@ -5,6 +5,9 @@ include_once('inc/header.inc.php');
 include_once('inc/dbh.inc.php');
 headerOutput('Barbers', array("assets/styles/bootstrap.css", "assets/styles/stylesheet.css", "assets/styles/picker.css"));
 navigationOutput('Barbers');
+if (empty($_SESSION["email"])) {
+    header("location: login.php");
+}
 ?>
 
 <div class="container-wrapper">
@@ -30,7 +33,7 @@ navigationOutput('Barbers');
                     </thead>
                     <tbody>
                     <?php
-                    if (isset($_SESSION["barbershop_id"])) {
+                    if (!empty($_SESSION["barbershop_id"])) {
 
                         $sql = "SELECT * FROM `barber` WHERE barbershop_id = " . $_SESSION["barbershop_id"];
                         $result = mysqli_query($db, $sql);
@@ -119,7 +122,7 @@ navigationOutput('Barbers');
                                     </div>
                                 </div>
                                 <?php
-                            }
+                            } exit();
                         }
                     }
                     ?>

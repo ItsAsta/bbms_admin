@@ -5,6 +5,9 @@ include_once('inc/header.inc.php');
 include_once('inc/dbh.inc.php');
 headerOutput('Barbers', array("assets/styles/bootstrap.css", "assets/styles/stylesheet.css", "assets/styles/picker.css"));
 navigationOutput('Barbers');
+if (empty($_SESSION["email"])) {
+    header("location: login.php");
+}
 ?>
 <div class="container-wrapper">
     <div class="container add-barber-form">

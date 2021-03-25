@@ -142,9 +142,10 @@ if (empty($_SESSION["email"])) {
                     </div>
 
                     <?php
-                }
+                } exit();
             } else {
                 echo "No data";
+                exit();
             }
         }
         ?>

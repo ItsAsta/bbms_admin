@@ -5,6 +5,9 @@ include_once('inc/header.inc.php');
 include_once('inc/dbh.inc.php');
 headerOutput('Users', array("assets/styles/bootstrap.css", "assets/styles/stylesheet.css", "assets/styles/picker.css"));
 navigationOutput('Users');
+if (empty($_SESSION["email"])) {
+    header("location: login.php");
+}
 ?>
 
 <div class="container-wrapper">
@@ -41,7 +44,6 @@ navigationOutput('Users');
                             </button></td></tr>"
                             ?>
 
-                            <!--        EDIT BARBER DETAILS            -->
                             <div class="modal modal-container" id="<?php echo $row['user_email']; ?>"
                                  role="dialog">
                                 <div class="modal-dialog">
@@ -63,13 +65,6 @@ navigationOutput('Users');
                                                         <input type="hidden" name="user_email"
                                                                value="<?php echo $row['user_email'] ?>">
 
-<!--                                                        <label>Email</label>-->
-<!--                                                        <br>-->
-<!--                                                        <input type="text" name="user_email"-->
-<!--                                                               value="--><?php //echo $row['user_email'] ?><!--">-->
-<!---->
-<!--                                                        <br>-->
-
                                                         <label>First Name</label>
                                                         <br>
                                                         <input type="text" name="user_first_name"
@@ -81,8 +76,6 @@ navigationOutput('Users');
                                                         <br>
                                                         <input type="text" name="user_last_name"
                                                                value="<?php echo $row['user_last_name'] ?>">
-
-
 
                                                     </div>
                                                     <div class="col-sm-auto">
@@ -119,7 +112,7 @@ navigationOutput('Users');
                                 </div>
                             </div>
                             <?php
-                        }
+                        } exit();
                     }
                     ?>
                     </tbody>
