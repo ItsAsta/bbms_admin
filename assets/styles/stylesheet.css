@@ -350,6 +350,43 @@ input:focus, textarea:focus, select:focus{
     margin: 20px;
 }
 
+.checkboxes {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.checkboxes label {
+
+    display: inline-block;
+
+
+    white-space: nowrap;
+
+}
+
+.checkboxes input {
+    box-shadow: none;
+    outline: 0;
+    text-decoration: none;
+    min-width: 80px;
+    vertical-align: middle;
+}
+
+.input-force-width {
+    min-width: 30px !important;
+    height: 20px;
+}
+
+.checkboxes label span {
+    display: block;
+    horiz-align: center;
+
+}
+
+/*.checkboxes-wrapper {*/
+/*    display: inline-block !important;*/
+/*}*/
+
 /* ADD BARBER */
 
 .add-barber-form {
@@ -407,9 +444,6 @@ input:focus, textarea:focus, select:focus{
     cursor: pointer;
 }
 
-.form-wrapper b:hover {
-    cursor: pointer;
-}
 .form-wrapper p {
     text-align: center;
 }

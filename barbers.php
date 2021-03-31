@@ -56,6 +56,18 @@ if (empty($_SESSION["email"])) {
                 </button></td>";
                                 echo "<td><button type='submit' class='view-booking-details btn' name='updateBarberStatus'>Status<i class='fas fa-eye' style='padding: 5px'></i>
                 </button></td></form></tr>";
+
+                                if (isset($_GET["error"])) {
+                                    if ($_GET["error"] == "empty") {
+                                        echo "<p class='error'>Can't complete action: One or more fields are empty!</p>";
+                                    } elseif ($_GET["error"] == "email") {
+                                        echo "<p class='error'>Can't complete action: Invalid email format!</p>";
+                                    } else if ($_GET["error"] == "password") {
+                                        echo "<p class='error'>Can't complete action: Passwords are not matching!</p>";
+                                    } else if ($_GET["error"] == "phoneNumber") {
+                                        echo "<p class='error'>Can't complete action: Invalid phone number format!</p>";
+                                    }
+                                }
                                 ?>
 
                                 <!--        EDIT BARBER DETAILS            -->

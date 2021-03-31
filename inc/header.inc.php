@@ -53,13 +53,15 @@ function navigationOutput($currentPage)
 function loopNavigation($currentPage)
 {
     // An array variable with our page names, which we'll match using the index with our second array.
-    $pageTitle = array("Home", "Barbershop", "Bookings", "Barbers", "Users", "Login");
+    $pageTitle = array("Home", "Barbershop", "Bookings", "Barbers", "Users", "Staff", "Login");
 
     // An array variable with our file names which we'll redirect to using the HREF attribute.
-    $fileNames = array("index.php", "barbershop.php", "bookings.php", "barbers.php", "users.php", "login.php");
+    $fileNames = array("index.php", "barbershop.php", "bookings.php", "barbers.php", "users.php", "staff.php", "login.php");
 
     if (empty($_SESSION["email"])) {
 
+        array_splice($pageTitle, 1, 1);
+        array_splice($fileNames, 1, 1);
         array_splice($pageTitle, 1, 1);
         array_splice($fileNames, 1, 1);
         array_splice($pageTitle, 1, 1);
@@ -86,8 +88,8 @@ function loopNavigation($currentPage)
         if (!empty($_SESSION["email"])) {
             // If the if statement returns true, we'll get the 4th index in our array and change the string to logout.
             // Since the user is logged in, we want to display logout instead of login/register.
-            $pageTitle[5] = "Logout";
-            $fileNames[5] = "inc/logout.inc.php";
+            $pageTitle[6] = "Logout";
+            $fileNames[6] = "inc/logout.inc.php";
         }
 
         // We then echo out our html code.

@@ -27,7 +27,7 @@ if (empty($_SESSION["email"])) {
                     <tbody>
                     <?php
                     if (!empty($_SESSION["barbershop_id"])) {
-                        $iniSql = "UPDATE `booking` set `booking_status` = 1 WHERE booking_date_time_booked < CURRENT_DATE()";
+                        $iniSql = "UPDATE `booking` set `booking_status` = 1 WHERE `barbershop_id` = " . $_SESSION["barbershop_id"] . " AND cast(booking_date_time_booked as date) <= cast(NOW() as date) AND cast(booking_date_time_booked as time(0)) < cast(NOW() as time(0))";
                         $iniResult = mysqli_query($db, $iniSql);
 
                         $sql = "SELECT `booking`.*, `user`.*, `barber`.* FROM `booking` INNER JOIN `user` ON booking.booking_email = user.user_email INNER JOIN `barber` ON booking.barber_id = barber.barber_id WHERE booking.barbershop_id = " . $_SESSION["barbershop_id"] . " AND `booking_status` = 0 ORDER BY CAST(booking_date_time_booked AS DATE) ASC LIMIT 7";
@@ -40,7 +40,7 @@ if (empty($_SESSION["email"])) {
                                 echo "<td>" . $row["user_first_name"] . " " . $row["user_last_name"] . "</td>";
                                 echo "<td>" . date("d-m-Y g:i A", strtotime($row["booking_date_time_booked"])) . "</td>";
                                 echo "<td>" . $row["barber_name"] . "</td></tr>";
-                            } exit();
+                            }
                         }
                     }
                     ?>
@@ -50,15 +50,14 @@ if (empty($_SESSION["email"])) {
             </div>
         </div>
     </div>
-    <?php
-        if (!empty($_SESSION["barbershop_id"])) { ?>
+    <?php if (!empty($_SESSION["barbershop_id"])) { ?>
     <div class="container" id="overviewContainer" style="padding: 0 10px 5px 10px">
         <?php
             $todaysBookingsSql = "SELECT * FROM `booking` WHERE barbershop_id = " . $_SESSION["barbershop_id"] . " AND cast(`booking_date_time_booked` as date) = cast(NOW() as date)";
             $todaysBookingsResult = mysqli_query($db, $todaysBookingsSql);
             $todaysBookingsResultCheck = mysqli_num_rows($todaysBookingsResult);
 
-            $activeBookingsSql = "SELECT * FROM `booking` WHERE barbershop_id = " . $_SESSION["barbershop_id"] . " AND booking_date_time_booked >= CURRENT_DATE() AND booking_status = 0";
+            $activeBookingsSql = "SELECT * FROM `booking` WHERE barbershop_id = " . $_SESSION["barbershop_id"] . " AND cast(booking_date_time_booked as date) = cast(NOW() as date) AND cast(booking_date_time_booked as time(0)) >= cast(NOW() as time(0)) AND booking_status = 0";
             $activeBookingsSqlResult = mysqli_query($db, $activeBookingsSql);
             $activeBookingsSqlResultCheck = mysqli_num_rows($activeBookingsSqlResult);
 

@@ -9,7 +9,7 @@ navigationOutput('Login');
     <div class="container">
         <div class="form-wrapper">
             <!-- LOGIN FORM -->
-            <form method="post" action="inc/login.inc.php" id="userLoginForm">
+            <form method="post" action="inc/login.inc.php">
                 <h3>Login</h3>
                 <hr style="background-color: white">
                 <div class="form-row">
@@ -27,6 +27,7 @@ navigationOutput('Login');
                 <div class="button-wrapper">
                     <button name="login" type="submit" id="loginBtn">LOGIN</button>
                 </div>
+                <p>Not Registered? <b onclick="window.location.href='register_barbershop.php'">Register!</b></p>
                 <?php
                 if (isset($_GET["error"])) {
 

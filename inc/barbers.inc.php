@@ -14,6 +14,13 @@ if (isset($_POST["edit_barber"])) {
     $barber_experience = $_POST["barberExperience"];
     $barber_speciality = $_POST["barberSpeciality"];
 
+    include_once('inc/functions.inc.php');
+
+    if (emptyInput(array($barber_name))) {
+        header("location: ../barbers.php?error=empty");
+        exit();
+    }
+
     updateBarberDetails($db, $_SESSION["barbershop_id"], $barber_id, $barber_name, $barber_experience, $barber_speciality);
 }
 

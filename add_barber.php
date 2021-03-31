@@ -43,6 +43,13 @@ if (empty($_SESSION["email"])) {
                         name="add_barber">Add Barber
                 </button>
             </div>
+            <?php
+            if (isset($_GET["error"])) {
+                if ($_GET["error"] == "empty") {
+                    echo "<p class='error'>Can't complete action: One or more fields are empty!</p>";
+                }
+            }
+            ?>
         </form>
     </div>
 </div>
