@@ -104,7 +104,7 @@ if (isset($_POST["register"])) {
     }
 
     if (barbershopExists($db, $barbershopName, $barbershopBranch, $barbershopEmail) !== false) {
-        header("location: ../register_barbershop.php?error=barberExist");
+        header("location: ../register_barbershop.php?error=barbershopExist");
         exit();
     }
 

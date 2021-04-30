@@ -57,7 +57,7 @@ if (empty($_SESSION["email"])) {
             $todaysBookingsResult = mysqli_query($db, $todaysBookingsSql);
             $todaysBookingsResultCheck = mysqli_num_rows($todaysBookingsResult);
 
-            $activeBookingsSql = "SELECT * FROM `booking` WHERE barbershop_id = " . $_SESSION["barbershop_id"] . " AND cast(booking_date_time_booked as date) = cast(NOW() as date) AND cast(booking_date_time_booked as time(0)) >= cast(NOW() as time(0)) AND booking_status = 0";
+            $activeBookingsSql = "SELECT * FROM `booking` WHERE barbershop_id = " . $_SESSION["barbershop_id"] . " AND booking_status = 0";
             $activeBookingsSqlResult = mysqli_query($db, $activeBookingsSql);
             $activeBookingsSqlResultCheck = mysqli_num_rows($activeBookingsSqlResult);
 

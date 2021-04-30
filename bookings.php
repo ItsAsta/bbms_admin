@@ -88,6 +88,8 @@ if (empty($_SESSION["email"])) {
                                             <h6><?php echo $row['barbershop_branch']; ?></h6>
                                             <h6 style="font-weight: bold">Date & Time</h6>
                                             <h6><?php echo date("d-m-Y g:i A", strtotime($row['booking_date_time_booked'])); ?></h6>
+                                            <h6 style="font-weight: bold">Date & Time Placed</h6>
+                                            <h6><?php echo date("d-m-Y g:i A", strtotime($row['booking_date_time_of_booking'])); ?></h6>
                                         </div>
                                     </div>
                                 </div>

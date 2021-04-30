@@ -12,7 +12,7 @@ function headerOutput($title, $styleSheetPath)
         echo '<link rel="stylesheet" type="text/css" href="' . $styleSheetPath[$i] . '">';
     }
 
-    echo '<title>' . $title . '</title>';
+    echo '<title>BBMS ADMIN - ' . $title . '</title>';
 
     //This function echo's out our java scripts.
     outputScripts();

@@ -216,13 +216,19 @@ if (empty($_SESSION["email"])) {
                 <?php
                 if (isset($_GET["error"])) {
                     if ($_GET["error"] == "empty") {
-                        echo "<p class='error'>One or more fields are empty!</p>";
-                        exit();
-                    }
-
-                    if ($_GET["error"] == "stmtFailed") {
-                        echo "<p class='error'>Could not update barbershop, please try again!</p>";
-                        exit();
+                        echo "<p class='error'>Can't complete action: One or more fields are empty!</p>";
+                    } elseif ($_GET["error"] == "email") {
+                        echo "<p class='error'>Can't complete action: Invalid email format!</p>";
+                    } elseif ($_GET["error"] == "alreadyRegistered") {
+                        echo "<p class='error'>Can't complete action: Email already registered!</p>";
+                    } elseif ($_GET["error"] == "password") {
+                        echo "<p class='error'>Can't complete action: Passwords are not matching!</p>";
+                    } elseif ($_GET["error"] == "phoneNumber") {
+                        echo "<p class='error'>Can't complete action: Invalid phone number format!</p>";
+                    } elseif ($_GET["error"] == "stmtfailed") {
+                        echo "<p class='error'>Can't complete action: Database Error, please try again!</p>";
+                    } elseif ($_GET["error"] == "wronglogin") {
+                        echo "<p class='error'>Can't complete action: Incorrect details, please try again!</p>";
                     }
                 } else if (isset($_GET["success"])) {
                     if ($_GET["success"] == "yes") {

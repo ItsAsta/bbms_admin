@@ -15,7 +15,7 @@ if (empty($_SESSION["email"])) {
         <div class="row">
             <div class="col-sm">
                 <div class="invis-container">
-                    <button onclick="window.location.href='add_barber.php'">Add Barber</button>
+                    <button onclick="window.location.href='register_barber.php'">Register Barber</button>
                 </div>
                 <h5 style="margin-top: 15px">Barbers</h5>
                 <hr>
@@ -52,7 +52,7 @@ if (empty($_SESSION["email"])) {
                                 }
                                 echo "<form method='post' action='inc/barbers.inc.php'><input type='hidden' name='barber_id' value=" . $row["barber_id"] . ">";
 
-                                echo "<td><button type='button' class='view-booking-details btn' data-toggle='modal' data-target='#" . $row["barber_id"] . "'>Edit<i class='fas fa-eye' style='padding: 5px'></i>
+                                echo "<td><button type='button' class='view-booking-details btn' data-toggle='modal' data-target='#" . $row["barber_id"] . "'>Update<i class='fas fa-eye' style='padding: 5px'></i>
                 </button></td>";
                                 echo "<td><button type='submit' class='view-booking-details btn' name='updateBarberStatus'>Status<i class='fas fa-eye' style='padding: 5px'></i>
                 </button></td></form></tr>";
@@ -62,10 +62,16 @@ if (empty($_SESSION["email"])) {
                                         echo "<p class='error'>Can't complete action: One or more fields are empty!</p>";
                                     } elseif ($_GET["error"] == "email") {
                                         echo "<p class='error'>Can't complete action: Invalid email format!</p>";
-                                    } else if ($_GET["error"] == "password") {
+                                    } elseif ($_GET["error"] == "alreadyRegistered") {
+                                        echo "<p class='error'>Can't complete action: Email already registered!</p>";
+                                    } elseif ($_GET["error"] == "password") {
                                         echo "<p class='error'>Can't complete action: Passwords are not matching!</p>";
-                                    } else if ($_GET["error"] == "phoneNumber") {
+                                    } elseif ($_GET["error"] == "phoneNumber") {
                                         echo "<p class='error'>Can't complete action: Invalid phone number format!</p>";
+                                    } elseif ($_GET["error"] == "stmtfailed") {
+                                        echo "<p class='error'>Can't complete action: Database Error, please try again!</p>";
+                                    } elseif ($_GET["error"] == "wronglogin") {
+                                        echo "<p class='error'>Can't complete action: Incorrect details, please try again!</p>";
                                     }
                                 }
                                 ?>
